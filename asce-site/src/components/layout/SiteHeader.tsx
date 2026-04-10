@@ -25,7 +25,7 @@ const SiteHeader = () => {
       className={`sticky top-0 border-b border-neutral-200 sm:z-40 ${mobileOpen ? "z-[1000] bg-white" : "z-40 bg-white/90 backdrop-blur"}`}
     >
       <div
-        className={`mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 ${mobileOpen ? "relative z-[1001] bg-white" : ""}`}
+        className={`mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 ${mobileOpen ? "relative z-[1001] bg-white" : ""}`}
       >
         <a
           href="/"
@@ -86,10 +86,10 @@ const SiteHeader = () => {
           aria-label="Site navigation"
           className="fixed inset-0 z-[1000] flex min-h-dvh flex-col bg-white sm:hidden"
         >
-          <div className="h-14 shrink-0" aria-hidden="true" />
+          <div className="h-16 shrink-0" aria-hidden="true" />
           <nav
             aria-label="Mobile"
-            className="flex min-h-0 flex-1 flex-col items-center justify-center px-6 pb-8"
+            className="flex min-h-0 flex-1 flex-col items-center justify-center px-4 pb-8"
           >
             <ul className="flex w-full max-w-sm flex-col items-center gap-1 text-center">
               {NAV_ITEMS.map((item) => (
