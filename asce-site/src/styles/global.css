@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    font-family: Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
+      "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
   /* Respect user motion preferences (baseline for animated React islands later) */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -21,6 +26,18 @@
 
   :where(a, button, input, textarea, select, summary):focus-visible {
     @apply rounded-sm ring-2 ring-blue-600 ring-offset-2 ring-offset-white;
+  }
+}
+
+@layer utilities {
+  .font-athiti {
+    font-family: Athiti, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
+      "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
+  .font-poppins {
+    font-family: Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
+      "Apple Color Emoji", "Segoe UI Emoji";
   }
 }
 

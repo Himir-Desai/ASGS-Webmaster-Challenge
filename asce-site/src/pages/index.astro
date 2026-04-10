@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCarousel from '../components/sections/home/HeroCarousel.tsx';
+import BearGardensIntro from '../components/sections/home/BearGardensIntro.astro';
+import PastEvents from '../components/sections/home/PastEvents.astro';
+import BearGardenDetails from '../components/sections/home/BearGardenDetails.astro';
 ---
 
 <BaseLayout title="Home">
@@ -8,8 +11,8 @@ import HeroCarousel from '../components/sections/home/HeroCarousel.tsx';
 		<div class="relative left-1/2 w-screen -translate-x-1/2">
 			<HeroCarousel client:load />
 		</div>
-		<section class="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6">
-			<p class="text-neutral-600">Home — layout shell ready. Sections will mount here as React islands.</p>
-		</section>
+		<BearGardensIntro />
+		<PastEvents />
+		<BearGardenDetails />
 	</main>
 </BaseLayout>
