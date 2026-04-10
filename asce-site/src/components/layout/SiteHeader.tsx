@@ -1,10 +1,10 @@
 import React, { useEffect, useId, useState } from "react";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
-  { href: "/work", label: "Work" },
+  { href: "/ASGS-Webmaster-Challenge", label: "Home" },
+  { href: "/ASGS-Webmaster-Challenge/about", label: "About" },
+  { href: "/ASGS-Webmaster-Challenge/contact", label: "Contact" },
+  { href: "/ASGS-Webmaster-Challenge/work", label: "Work" },
 ] as const;
 
 const SiteHeader = () => {
@@ -28,7 +28,7 @@ const SiteHeader = () => {
         className={`mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 ${mobileOpen ? "relative z-[1001] bg-white" : ""}`}
       >
         <a
-          href="/"
+          href="/ASGS-Webmaster-Challenge"
           className="inline-flex items-center gap-3 rounded-md focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
           aria-label="ASCE site home"
         >
