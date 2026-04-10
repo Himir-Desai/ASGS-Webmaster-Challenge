@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/layout/SiteHeader.tsx';
+---
+
+<BaseLayout title="Home">
+	<SiteHeader client:load/>
+	<main id="main" class="outline-none">
+		<p class="p-6 text-neutral-600">Home — layout shell ready. Sections will mount here as React islands.</p>
+	</main>
+</BaseLayout>
