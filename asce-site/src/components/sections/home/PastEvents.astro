@@ -1,10 +1,13 @@
 ---
+import OpenableInfoCard from '../../elements/OpenableInfoCard.tsx';
+
 type PastEvent = {
 	title: string;
 	dateLabel: string;
 	imageSrc: string;
 	imageAlt: string;
 	description: string;
+	details: string;
 };
 
 const events: PastEvent[] = [
@@ -15,6 +18,8 @@ const events: PastEvent[] = [
 		imageAlt: 'Event poster for “ASCE-Bear, Where Are You?”',
 		description:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Donec porttitor tempor pulvinar.\n\nSed congue elementum placerat. Vivamus sagittis ullamcorper quam, sit amet tincidunt enim sollicitudin ut.\n\nInteger tempor enim lacus, sit amet dapibus diam elementum et. Praesent ac augue vitae turpis ullamcorper.',
 	},
 	{
 		title: 'The Rise of ASCE Bear',
@@ -23,6 +28,8 @@ const events: PastEvent[] = [
 		imageAlt: 'Event poster for “The Rise of ASCE Bear”',
 		description:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod mattis quam porttitor ornare.\n\nNulla ac dolor nibh. Vestibulum feugiat convallis posuere. Pellentesque vestibulum eleifend turpis vel consequat.\n\nMorbi malesuada sodales urna, quis pulvinar nunc interdum ultrices.',
 	},
 	{
 		title: 'My Little ASCE Bear',
@@ -31,6 +38,8 @@ const events: PastEvent[] = [
 		imageAlt: 'Event poster for “My Little ASCE Bear”',
 		description:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempor turpis in nunc finibus sollicitudin.\n\nFusce et sagittis magna, in feugiat felis. Sed volutpat, risus id ultricies blandit, arcu elit consectetur tellus.\n\nUt fringilla eleifend mollis. Phasellus in dui tellus.',
 	},
 ];
 ---
@@ -48,26 +57,15 @@ const events: PastEvent[] = [
 			<div class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12">
 				{
 					events.map((ev) => (
-						<article class="card-interactive overflow-hidden rounded-xl border-2 border-neutral-200 bg-white">
-							<img
-								src={ev.imageSrc}
-								alt={ev.imageAlt}
-								class="card-image-zoom block aspect-[7/6] w-full object-cover object-top"
-								loading="lazy"
-								decoding="async"
-							/>
-							<div class="px-5 pb-6 pt-5 text-center">
-								<h3 class="font-poppins text-[18px] font-medium leading-[1.28] tracking-normal text-neutral-900 sm:text-[20px]">
-									{ev.title}
-								</h3>
-								<p class="font-poppins mt-2 text-[16px] font-light leading-[1.28] tracking-normal text-neutral-600 sm:text-[18px]">
-									{ev.dateLabel}
-								</p>
-								<p class="font-poppins mt-4 text-pretty text-[13px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-700 sm:text-[14px]">
-									{ev.description}
-								</p>
-							</div>
-						</article>
+						<OpenableInfoCard
+							client:idle
+							title={ev.title}
+							subtitle={ev.dateLabel}
+							imageSrc={ev.imageSrc}
+							imageAlt={ev.imageAlt}
+							summary={ev.description}
+							details={ev.details}
+						/>
 					))
 				}
 			</div>

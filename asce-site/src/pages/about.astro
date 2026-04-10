@@ -1,9 +1,106 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import InfoCard from '../components/elements/InfoCard.astro';
+
+const whoWeAreCards = [
+	{
+		title: 'Student-led',
+		body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+	},
+	{
+		title: 'Community-first',
+		body: 'Sed congue elementum placerat. Maecenas nec rhoncus est.',
+	},
+	{
+		title: 'Accessible events',
+		body: 'Integer tempor enim lacus, sit amet dapibus diam elementum et.',
+	},
+] as const;
+
+const whatWeDoCards = [
+	{
+		title: 'Events',
+		body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas nec rhoncus est.',
+	},
+	{
+		title: 'Community',
+		body: 'Sed congue elementum placerat. Vivamus sagittis ullamcorper quam, sit amet tincidunt enim sollicitudin ut.',
+	},
+	{
+		title: 'Merch',
+		body: 'Integer tempor enim lacus, sit amet dapibus diam elementum et. Praesent ac augue vitae turpis ullamcorper.',
+	},
+] as const;
 ---
 
 <BaseLayout title="About">
-	<main id="main" class="mx-auto min-h-0 w-full max-w-6xl flex-1 px-4 py-6 outline-none sm:px-6">
-		<p class="text-neutral-600">About — layout shell ready. Sections will mount here as React islands.</p>
+	<main id="main" class="min-h-0 flex-1 outline-none">
+		<section aria-label="About ASCE" class="bg-white">
+			<div class="section-shell">
+				<div class="mx-auto w-full max-w-6xl">
+					<div class="max-w-4xl">
+						<h1 class="font-athiti text-[40px] font-semibold leading-[1.12] tracking-normal text-neutral-900 sm:text-[52px]">
+							About
+						</h1>
+						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[20px]">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet augue sed ipsum gravida
+							faucibus. Sed vitae urna a erat facilisis pellentesque.
+						</p>
+						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[20px]">
+							Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+							cubilia curae; Duis ut odio at arcu porta placerat.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section aria-label="Who we are" class="bg-white">
+			<div class="section-shell">
+				<div class="mx-auto w-full max-w-6xl">
+					<div class="max-w-3xl">
+						<h2 class="font-athiti text-[32px] font-semibold leading-[1.28] text-neutral-900 sm:text-[40px]">
+							Who we are
+						</h2>
+						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et
+							scelerisque. Nullam gravida eu elit at rutrum.
+						</p>
+						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
+							Mauris vel nisl ante. Vivamus sagittis ullamcorper quam, sit amet tincidunt enim sollicitudin
+							ut. Vestibulum at elementum leo.
+						</p>
+					</div>
+
+					<div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
+						{whoWeAreCards.map((c) => (
+							<InfoCard title={c.title}>{c.body}</InfoCard>
+						))}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section aria-label="What we do" class="bg-white">
+			<div class="section-shell">
+				<div class="mx-auto w-full max-w-6xl">
+					<div class="max-w-3xl">
+						<h2 class="font-athiti text-[32px] font-semibold leading-[1.28] text-neutral-900 sm:text-[40px]">
+							What we do
+						</h2>
+						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Donec
+							porttitor tempor pulvinar.
+						</p>
+					</div>
+
+					<div class="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-8">
+						{whatWeDoCards.map((c) => (
+							<InfoCard title={c.title}>{c.body}</InfoCard>
+						))}
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 </BaseLayout>
