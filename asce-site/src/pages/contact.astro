@@ -1,9 +1,58 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/sections/contact/ContactForm.tsx';
+import PageIntro from '../components/elements/PageIntro.astro';
 ---
 
 <BaseLayout title="Contact">
-	<main id="main" class="mx-auto min-h-0 w-full max-w-6xl flex-1 px-4 py-6 outline-none sm:px-6">
-		<p class="text-neutral-600">Contact — layout shell ready. Sections will mount here as React islands.</p>
+	<main id="main" class="min-h-0 flex-1 outline-none">
+		<!-- PAGE INTRO + CONTACT FORM -->
+		<PageIntro ariaLabel="Contact" title="Contact">
+			<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
+				Send us a message and we’ll get back to you. Submissions open your email client automatically.
+			</p>
+
+			<!-- Main: form | Side: social links -->
+			<div slot="after" class="mt-8 grid grid-cols-1 items-start gap-8 lg:grid-cols-[7fr_4fr]">
+				<div class="card-interactive w-full rounded-xl border-2 border-neutral-200 bg-white p-6 sm:p-8">
+					<ContactForm client:load />
+				</div>
+
+				<aside class="lg:sticky lg:top-24">
+					<div class="card-interactive rounded-xl border-2 border-neutral-200 bg-white p-6 sm:p-8">
+						<h2 class="font-athiti text-[24px] font-semibold leading-[1.28] text-neutral-900">
+							Social media
+						</h2>
+						<p class="font-poppins mt-2 text-sm leading-relaxed text-neutral-600">
+							Follow along for updates and event recaps.
+						</p>
+						<nav aria-label="Social links" class="mt-5 flex flex-col gap-3 text-sm">
+							<a
+								href="https://www.instagram.com/ucsdasce/"
+								class="group card-interactive flex items-center justify-between gap-4 rounded-lg border-2 border-neutral-200 bg-white px-4 py-3 text-neutral-800 transition-[color,transform] hover:-translate-y-px hover:text-neutral-900 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<span class="font-semibold">Instagram</span>
+								<span class="text-neutral-500 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+									→
+								</span>
+							</a>
+							<a
+								href="https://www.linkedin.com/company/ucsd-associated-students-concerts-and-events"
+								class="group card-interactive flex items-center justify-between gap-4 rounded-lg border-2 border-neutral-200 bg-white px-4 py-3 text-neutral-800 transition-[color,transform] hover:-translate-y-px hover:text-neutral-900 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<span class="font-semibold">LinkedIn</span>
+								<span class="text-neutral-500 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+									→
+								</span>
+							</a>
+						</nav>
+					</div>
+				</aside>
+			</div>
+		</PageIntro>
 	</main>
 </BaseLayout>

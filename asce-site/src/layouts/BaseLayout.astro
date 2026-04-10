@@ -28,7 +28,6 @@ const { title, description = 'ASGS — accessible, responsive site.' } = Astro.p
 		<title>{title}</title>
 	</head>
 	<body class="flex min-h-dvh flex-col bg-white text-neutral-900 antialiased">
-		<a class="skip-link" href="#main">Skip to main content</a>
 		<div class="flex min-h-0 min-w-0 flex-1 flex-col">
 			<SiteHeader client:load />
 			<slot />

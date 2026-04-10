@@ -4,6 +4,8 @@
   html {
     font-family: Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
       "Apple Color Emoji", "Segoe UI Emoji";
+    /* Keep scrollbar width consistent to avoid layout shift. */
+    overflow-y: scroll;
   }
 
   /* Respect user motion preferences (baseline for animated React islands later) */
@@ -30,6 +32,11 @@
 }
 
 @layer utilities {
+  /* Shared section padding (responsive, consistent across home sections) */
+  .section-shell {
+    @apply w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-20;
+  }
+
   .font-athiti {
     font-family: Athiti, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
       "Apple Color Emoji", "Segoe UI Emoji";
@@ -39,17 +46,22 @@
     font-family: Poppins, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
       "Apple Color Emoji", "Segoe UI Emoji";
   }
+
+  /* Card hover/focus treatment used by Past Events (and reusable elsewhere) */
+  .card-interactive {
+    @apply transition-[box-shadow,border-color] duration-200 ease-out;
+  }
+  .card-interactive:hover,
+  .card-interactive:focus-within {
+    @apply border-neutral-300 shadow-md;
+  }
+
+  .card-image-zoom {
+    @apply transition-transform duration-300 ease-out will-change-transform;
+  }
+  .card-interactive:hover .card-image-zoom,
+  .card-interactive:focus-within .card-image-zoom {
+    @apply scale-[1.03];
+  }
 }
 
-/* Skip link: hidden until keyboard focus */
-.skip-link {
-  @apply absolute left-4 top-4 z-50 -translate-y-[150%] rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white shadow-md transition-transform duration-200;
-}
-
-.skip-link:focus {
-  @apply translate-y-0 outline-none;
-}
-
-.skip-link:focus-visible {
-  @apply ring-2 ring-blue-400 ring-offset-2 ring-offset-white;
-}
