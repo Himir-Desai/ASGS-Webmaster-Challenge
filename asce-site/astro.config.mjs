@@ -12,6 +12,6 @@ export default defineConfig({
   },
 
   integrations: [react()],
-  // site: "https://Himir-Desai.github.io",
-  // base: "/ASGS-Webmaster-Challenge",
+  site: "https://Himir-Desai.github.io",
+  base: "/ASGS-Webmaster-Challenge",
 });

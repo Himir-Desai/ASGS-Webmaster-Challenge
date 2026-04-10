@@ -6,9 +6,9 @@ type Slide = {
 };
 
 const SLIDES: readonly Slide[] = [
-  { src: "/images/hero-carousel-nov-21.jpg", alt: "Event highlight from Nov 21." },
-  { src: "/images/hero-carousel-feb-20.jpg", alt: "Event highlight from Feb 20." },
-  { src: "/images/hero-carousel-apr-03.png", alt: "Event highlight from Apr 03." },
+  { src: "/ASGS-Webmaster-Challenge/images/hero-carousel-nov-21.jpg", alt: "Event highlight from Nov 21." },
+  { src: "/ASGS-Webmaster-Challenge/images/hero-carousel-feb-20.jpg", alt: "Event highlight from Feb 20." },
+  { src: "/ASGS-Webmaster-Challenge/images/hero-carousel-apr-03.png", alt: "Event highlight from Apr 03." },
 ] as const;
 
 export default function HeroCarousel() {
@@ -118,7 +118,7 @@ export default function HeroCarousel() {
           className="group absolute left-2 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] active:-translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:left-4 sm:h-[62px] sm:w-[62px]"
         >
           <img
-            src="/icons/prev.svg"
+            src="/ASGS-Webmaster-Challenge/icons/prev.svg"
             alt=""
             aria-hidden="true"
             height={31}
@@ -139,7 +139,7 @@ export default function HeroCarousel() {
           className="group absolute right-2 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] active:translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:right-4 sm:h-[62px] sm:w-[62px]"
         >
           <img
-            src="/icons/next.svg"
+            src="/ASGS-Webmaster-Challenge/icons/next.svg"
             alt=""
             aria-hidden="true"
             height={31}

@@ -33,7 +33,7 @@ const SiteHeader = () => {
           aria-label="ASCE site home"
         >
           <img
-            src="/images/logo-black.svg"
+            src="/ASGS-Webmaster-Challenge/images/logo-black.svg"
             alt=""
             className="h-9 w-9 object-contain"
             width={36}
@@ -68,7 +68,7 @@ const SiteHeader = () => {
           onClick={() => setMobileOpen((v) => !v)}
         >
           <img
-            src={mobileOpen ? "/icons/close.svg" : "/icons/hamburger.svg"}
+            src={mobileOpen ? "/ASGS-Webmaster-Challenge/icons/close.svg" : "/ASGS-Webmaster-Challenge/icons/hamburger.svg"}
             alt=""
             width={24}
             height={24}

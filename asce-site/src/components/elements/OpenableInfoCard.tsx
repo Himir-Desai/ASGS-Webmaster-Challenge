@@ -132,7 +132,7 @@ export default function OpenableInfoCard({ title, subtitle, imageSrc, imageAlt, 
                   className="grid h-10 w-10 cursor-pointer place-items-center rounded-full text-neutral-700 transition-[background-color,color,box-shadow,transform] duration-150 ease-out hover:bg-neutral-100 hover:text-neutral-900 hover:shadow-md hover:shadow-black/15 active:scale-[0.96] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none"
                   aria-label="Close"
                 >
-                  <img src="/icons/close.svg" alt="" aria-hidden="true" className="h-5 w-5" draggable={false} />
+                  <img src="/ASGS-Webmaster-Challenge/icons/close.svg" alt="" aria-hidden="true" className="h-5 w-5" draggable={false} />
                 </button>
               </div>
 
