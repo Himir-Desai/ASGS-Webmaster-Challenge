@@ -16,6 +16,7 @@ export default function HeroCarousel() {
   const controlsId = useId();
   const liveId = useId();
   const [paused, setPaused] = useState(false);
+  const [hoverHint, setHoverHint] = useState<"prev" | "next" | null>(null);
 
   const SLIDES_LENGTH = SLIDES.length;
   const safeActive = ((active % SLIDES_LENGTH) + SLIDES_LENGTH) % SLIDES_LENGTH;
@@ -42,8 +43,8 @@ export default function HeroCarousel() {
           aria-current={idx === safeActive ? "true" : undefined}
           onClick={() => setActive(idx)}
           className={[
-            "h-[6px] w-[6px] rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 sm:h-2 sm:w-2",
-            idx === safeActive ? "bg-black" : "bg-neutral-300",
+            "h-[6px] w-[6px] cursor-pointer rounded-full bg-neutral-300 transition-[transform,background-color] duration-200 ease-out will-change-transform hover:scale-[1.6] hover:bg-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:h-2 sm:w-2",
+            idx === safeActive ? "scale-[1.35] bg-neutral-900 hover:bg-neutral-900" : "",
           ].join(" ")}
         />
       ))}
@@ -72,21 +73,27 @@ export default function HeroCarousel() {
           }
         }}
       >
-        <div
-          className="flex w-full transition-transform duration-300 ease-out"
-          style={{ transform: `translateX(-${safeActive * 100}%)` }}
-        >
+        <div className="aspect-[16/9] w-full bg-neutral-100">
+          <div
+            className="flex h-full w-full will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.2,0.9,0.2,1)] motion-reduce:transition-none"
+            style={{ transform: `translateX(-${safeActive * 100}%)` }}
+          >
           {SLIDES.map((slide, idx) => (
             <div key={slide.src} className="w-full shrink-0">
               <img
                 src={slide.src}
                 alt={slide.alt}
-                className="block h-auto w-full object-contain"
+                className={[
+                  "block h-full w-full object-cover object-center transition-transform duration-200 ease-out motion-reduce:transition-none",
+                  idx === safeActive && hoverHint === "prev" ? "translate-x-2" : "",
+                  idx === safeActive && hoverHint === "next" ? "-translate-x-2" : "",
+                ].join(" ")}
                 fetchPriority={idx === safeActive ? "high" : "auto"}
                 decoding="async"
               />
             </div>
           ))}
+          </div>
         </div>
 
         <button
@@ -94,14 +101,18 @@ export default function HeroCarousel() {
           aria-controls={controlsId}
           aria-label="Previous slide"
           onClick={goPrev}
-          className="absolute left-0 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 items-center justify-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 sm:h-[62px] sm:w-[62px]"
+          onMouseEnter={() => setHoverHint("prev")}
+          onMouseLeave={() => setHoverHint(null)}
+          onFocus={() => setHoverHint("prev")}
+          onBlur={() => setHoverHint(null)}
+          className="group absolute left-2 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] active:-translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:left-4 sm:h-[62px] sm:w-[62px]"
         >
           <img
             src="/icons/prev.svg"
             alt=""
             aria-hidden="true"
             height={31}
-            className="h-[31px] w-auto [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))]"
+            className="h-[31px] w-auto transition-transform duration-200 ease-out [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))] motion-reduce:transition-none group-active:-translate-x-0.5"
             draggable={false}
           />
         </button>
@@ -111,14 +122,18 @@ export default function HeroCarousel() {
           aria-controls={controlsId}
           aria-label="Next slide"
           onClick={goNext}
-          className="absolute right-0 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 items-center justify-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 sm:h-[62px] sm:w-[62px]"
+          onMouseEnter={() => setHoverHint("next")}
+          onMouseLeave={() => setHoverHint(null)}
+          onFocus={() => setHoverHint("next")}
+          onBlur={() => setHoverHint(null)}
+          className="group absolute right-2 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] active:translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:right-4 sm:h-[62px] sm:w-[62px]"
         >
           <img
             src="/icons/next.svg"
             alt=""
             aria-hidden="true"
             height={31}
-            className="h-[31px] w-auto [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))]"
+            className="h-[31px] w-auto transition-transform duration-200 ease-out [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))] motion-reduce:transition-none group-active:translate-x-0.5"
             draggable={false}
           />
         </button>

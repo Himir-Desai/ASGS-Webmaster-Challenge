@@ -36,8 +36,11 @@ const events: PastEvent[] = [
 ---
 
 <section aria-labelledby="past-events-heading" class="bg-white">
-	<div class="w-full px-4 py-10 sm:px-[75px] sm:py-14">
-		<h2 id="past-events-heading" class="font-athiti text-[32px] font-semibold leading-[1.28] text-neutral-900 sm:text-[40px]">
+	<div class="section-shell">
+		<h2
+			id="past-events-heading"
+			class="font-athiti text-[32px] font-semibold leading-[1.28] text-neutral-900 sm:text-[40px]"
+		>
 			Past Events
 		</h2>
 
@@ -45,11 +48,11 @@ const events: PastEvent[] = [
 			<div class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12">
 				{
 					events.map((ev) => (
-						<article class="overflow-hidden rounded-xl border-2 border-neutral-200 bg-white">
+						<article class="card-interactive overflow-hidden rounded-xl border-2 border-neutral-200 bg-white">
 							<img
 								src={ev.imageSrc}
 								alt={ev.imageAlt}
-								class="block aspect-[7/6] w-full object-cover object-top"
+								class="card-image-zoom block aspect-[7/6] w-full object-cover object-top"
 								loading="lazy"
 								decoding="async"
 							/>
