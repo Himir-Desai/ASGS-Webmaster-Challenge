@@ -1,9 +1,64 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCarousel from '../components/sections/home/HeroCarousel.tsx';
-import BearGardensIntro from '../components/sections/home/BearGardensIntro.astro';
-import PastEvents from '../components/sections/home/PastEvents.astro';
-import BearGardenDetails from '../components/sections/home/BearGardenDetails.astro';
+import OpenableInfoCard from '../components/elements/OpenableInfoCard.tsx';
+
+const bearGardensTitle =
+	'Bear Gardens are daytime carnivals where students can chill with free food and play games to win some bear-y cool prizes with our mascot, ASCE Bear.';
+const bearGardensBody =
+	'As a play on “Biergarten”, Bear Garden serves free beer to students over 21 who present a valid ID, but the fun is open to all UCSD undergraduate students! Each Bear Garden also has a special theme with exclusive, themed stickers and merchandise. Come out for a paw-some time!';
+
+const pastEvents = [
+	{
+		title: 'ASCE-Bear, Where Are You?',
+		dateLabel: 'November 21, 2025',
+		imageSrc: '/images/full-image-nov-21.jpg',
+		imageAlt: 'Event poster for “ASCE-Bear, Where Are You?”',
+		description:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Donec porttitor tempor pulvinar.\n\nSed congue elementum placerat. Vivamus sagittis ullamcorper quam, sit amet tincidunt enim sollicitudin ut.\n\nInteger tempor enim lacus, sit amet dapibus diam elementum et. Praesent ac augue vitae turpis ullamcorper.',
+	},
+	{
+		title: 'The Rise of ASCE Bear',
+		dateLabel: 'February 20, 2026',
+		imageSrc: '/images/full-image-feb-20.jpg',
+		imageAlt: 'Event poster for “The Rise of ASCE Bear”',
+		description:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod mattis quam porttitor ornare.\n\nNulla ac dolor nibh. Vestibulum feugiat convallis posuere. Pellentesque vestibulum eleifend turpis vel consequat.\n\nMorbi malesuada sodales urna, quis pulvinar nunc interdum ultrices.',
+	},
+	{
+		title: 'My Little ASCE Bear',
+		dateLabel: 'April 3, 2026',
+		imageSrc: '/images/full-image-apr-03.png',
+		imageAlt: 'Event poster for “My Little ASCE Bear”',
+		description:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempor turpis in nunc finibus sollicitudin.\n\nFusce et sagittis magna, in feugiat felis. Sed volutpat, risus id ultricies blandit, arcu elit consectetur tellus.\n\nUt fringilla eleifend mollis. Phasellus in dui tellus.',
+	},
+];
+
+const bearGardenDetails = [
+	{
+		title: 'Food',
+		body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit at rutrum. Aliquam sit amet sollicitudin est. Suspendisse potenti. Donec porttitor tempor pulvinar. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+	},
+	{
+		title: 'Merch',
+		body: 'Mauris vel nisl ante. Vivamus sagittis ullamcorper quam, sit amet tincidunt enim sollicitudin ut. Vestibulum at elementum leo. Aliquam erat volutpat. Nullam magna orci, accumsan at arcu lobortis, volutpat cursus nisl. Suspendisse metus purus, gravida vehicula eros in, malesuada posuere magna.',
+	},
+	{
+		title: 'Attractions',
+		body: 'Nulla ac dolor nibh. Vestibulum feugiat convallis posuere. Pellentesque vestibulum eleifend turpis vel consequat. Cras tempor turpis in nunc finibus sollicitudin. Morbi malesuada sodales urna, quis pulvinar nunc interdum ultrices. Nullam id risus velit. Ut fringilla eleifend mollis. Phasellus in dui tellus. Nam euismod mattis quam porttitor ornare.',
+	},
+	{
+		title: 'Prizes',
+		body: 'Integer tempor enim lacus, sit amet dapibus diam elementum et. Pellentesque congue libero id enim dignissim consequat. Fusce et sagittis magna, in feugiat felis. Sed volutpat, risus id ultricies blandit, arcu elit consectetur tellus, laoreet ornare purus nulla in ipsum. Praesent ac augue vitae turpis ullamcorper hendrerit eleifend in odio.',
+	},
+];
 ---
 
 <BaseLayout title="Home">
@@ -11,8 +66,90 @@ import BearGardenDetails from '../components/sections/home/BearGardenDetails.ast
 		<div class="w-full">
 			<HeroCarousel client:load />
 		</div>
-		<BearGardensIntro />
-		<PastEvents />
-		<BearGardenDetails />
+
+		<section aria-label="Bear Gardens intro" class="bg-white">
+			<div class="section-shell">
+				<div class="text-center">
+					<p class="font-athiti text-pretty text-[24px] font-normal leading-[1.28] tracking-normal text-neutral-800 sm:text-[36px]">
+						{bearGardensTitle}
+					</p>
+					<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:mt-6 sm:text-[20px]">
+						{bearGardensBody}
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<section aria-labelledby="past-events-heading" class="bg-white">
+			<div class="section-shell">
+				<h2
+					id="past-events-heading"
+					class="font-athiti text-[32px] font-semibold leading-[1.28] text-neutral-900 sm:text-[40px]"
+				>
+					Past Events
+				</h2>
+
+				<div class="mt-5 rounded-2xl border-2 border-neutral-300 p-5 sm:mt-6 sm:p-8">
+					<div class="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-12">
+						{
+							pastEvents.map((ev) => (
+								<OpenableInfoCard
+									client:idle
+									title={ev.title}
+									subtitle={ev.dateLabel}
+									imageSrc={ev.imageSrc}
+									imageAlt={ev.imageAlt}
+									summary={ev.description}
+									details={ev.details}
+								/>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section aria-label="Bear Garden details" class="bg-white">
+			<div class="section-shell">
+				<div class="hidden grid-cols-2 gap-x-24 gap-y-16 sm:grid">
+					{
+						bearGardenDetails.map((d) => (
+							<div>
+								<h3 class="font-athiti text-[24px] font-semibold leading-[1.28] tracking-normal text-neutral-900">
+									{d.title}
+								</h3>
+								<p class="font-poppins mt-4 text-[18px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-700">
+									{d.body}
+								</p>
+							</div>
+						))
+					}
+				</div>
+
+				<div class="sm:hidden">
+					<div class="divide-y divide-neutral-200 rounded-xl border-2 border-neutral-200">
+						{
+							bearGardenDetails.map((d) => (
+								<details class="group px-4 py-4">
+									<summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-athiti text-[24px] font-semibold leading-[1.28] text-neutral-900">
+										<span>{d.title}</span>
+										<span aria-hidden="true" class="text-neutral-500 transition-transform group-open:rotate-180">
+											▾
+										</span>
+									</summary>
+									<div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none group-open:grid-rows-[1fr]">
+										<div class="overflow-hidden">
+											<p class="font-poppins mt-3 translate-y-1 text-[18px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-700 opacity-0 transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none group-open:translate-y-0 group-open:opacity-100">
+												{d.body}
+											</p>
+										</div>
+									</div>
+								</details>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 </BaseLayout>

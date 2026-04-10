@@ -1,9 +1,69 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import EventSection from '../components/sections/work/EventSection.astro';
+
+const events = [
+	{
+		title: 'ASCE-Bear, Where Are You?',
+		dateLabel: 'November 21, 2025',
+		imageSrc: '/images/full-image-nov-21.jpg',
+		imageAlt: 'Event poster for “ASCE-Bear, Where Are You?”',
+		description:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Donec porttitor tempor pulvinar.\n\nSed congue elementum placerat. Vivamus sagittis ullamcorper quam, sit amet tincidunt enim sollicitudin ut.\n\nInteger tempor enim lacus, sit amet dapibus diam elementum et. Praesent ac augue vitae turpis ullamcorper.',
+	},
+	{
+		title: 'The Rise of ASCE Bear',
+		dateLabel: 'February 20, 2026',
+		imageSrc: '/images/full-image-feb-20.jpg',
+		imageAlt: 'Event poster for “The Rise of ASCE Bear”',
+		description:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod mattis quam porttitor ornare.\n\nNulla ac dolor nibh. Vestibulum feugiat convallis posuere. Pellentesque vestibulum eleifend turpis vel consequat.\n\nMorbi malesuada sodales urna, quis pulvinar nunc interdum ultrices.',
+	},
+	{
+		title: 'My Little ASCE Bear',
+		dateLabel: 'April 3, 2026',
+		imageSrc: '/images/full-image-apr-03.png',
+		imageAlt: 'Event poster for “My Little ASCE Bear”',
+		description:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius eu metus et scelerisque. Nullam gravida eu elit et rutrum. Sed congue elementum placerat. Maecenas nec rhoncus est.',
+		details:
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tempor turpis in nunc finibus sollicitudin.\n\nFusce et sagittis magna, in feugiat felis. Sed volutpat, risus id ultricies blandit, arcu elit consectetur tellus.\n\nUt fringilla eleifend mollis. Phasellus in dui tellus.',
+	},
+];
 ---
 
 <BaseLayout title="Work">
-	<main id="main" class="mx-auto min-h-0 w-full max-w-6xl flex-1 px-4 py-6 outline-none sm:px-6">
-		<p class="text-neutral-600">Work — layout shell ready. Sections will mount here as React islands.</p>
+	<main id="main" class="min-h-0 flex-1 outline-none">
+		<section aria-label="Work" class="bg-white">
+			<div class="section-shell">
+				<div class="mx-auto w-full max-w-6xl">
+					<div class="max-w-4xl">
+						<h1 class="font-athiti text-[40px] font-semibold leading-[1.12] tracking-normal text-neutral-900 sm:text-[52px]">
+							Work
+						</h1>
+						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
+							A look back at recent events.
+						</p>
+					</div>
+
+					<div class="mt-8 space-y-8">
+						{events.map((ev) => (
+							<EventSection
+								title={ev.title}
+								dateLabel={ev.dateLabel}
+								imageSrc={ev.imageSrc}
+								imageAlt={ev.imageAlt}
+								description={ev.description}
+								details={ev.details}
+							/>
+						))}
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 </BaseLayout>
