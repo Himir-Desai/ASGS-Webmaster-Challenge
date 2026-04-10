@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import InfoCard from '../components/elements/InfoCard.astro';
+import PageIntro from '../components/elements/PageIntro.astro';
 
+// ABOUT PAGE — "WHO WE ARE" CARD CONTENT
 const whoWeAreCards = [
 	{
 		title: 'Student-led',
@@ -17,6 +19,7 @@ const whoWeAreCards = [
 	},
 ] as const;
 
+// ABOUT PAGE — "WHAT WE DO" CARD CONTENT
 const whatWeDoCards = [
 	{
 		title: 'Events',
@@ -35,26 +38,19 @@ const whatWeDoCards = [
 
 <BaseLayout title="About">
 	<main id="main" class="min-h-0 flex-1 outline-none">
-		<section aria-label="About ASCE" class="bg-white">
-			<div class="section-shell">
-				<div class="mx-auto w-full max-w-6xl">
-					<div class="max-w-4xl">
-						<h1 class="font-athiti text-[40px] font-semibold leading-[1.12] tracking-normal text-neutral-900 sm:text-[52px]">
-							About
-						</h1>
-						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[20px]">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet augue sed ipsum gravida
-							faucibus. Sed vitae urna a erat facilisis pellentesque.
-						</p>
-						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[20px]">
-							Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
-							cubilia curae; Duis ut odio at arcu porta placerat.
-						</p>
-					</div>
-				</div>
-			</div>
-		</section>
+		<!-- PAGE INTRO -->
+		<PageIntro ariaLabel="About ASCE" title="About">
+			<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[20px]">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet augue sed ipsum gravida faucibus.
+				Sed vitae urna a erat facilisis pellentesque.
+			</p>
+			<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[20px]">
+				Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia
+				curae; Duis ut odio at arcu porta placerat.
+			</p>
+		</PageIntro>
 
+		<!-- WHO WE ARE — INTRO + CARD GRID -->
 		<section aria-label="Who we are" class="bg-white">
 			<div class="section-shell">
 				<div class="mx-auto w-full max-w-6xl">
@@ -81,6 +77,7 @@ const whatWeDoCards = [
 			</div>
 		</section>
 
+		<!-- WHAT WE DO — INTRO + CARD GRID -->
 		<section aria-label="What we do" class="bg-white">
 			<div class="section-shell">
 				<div class="mx-auto w-full max-w-6xl">

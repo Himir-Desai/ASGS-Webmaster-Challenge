@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EventSection from '../components/sections/work/EventSection.astro';
+import PageIntro from '../components/elements/PageIntro.astro';
 
+// WORK PAGE — EVENT LIST CONTENT
 const events = [
 	{
 		title: 'ASCE-Bear, Where Are You?',
@@ -38,32 +40,25 @@ const events = [
 
 <BaseLayout title="Work">
 	<main id="main" class="min-h-0 flex-1 outline-none">
-		<section aria-label="Work" class="bg-white">
-			<div class="section-shell">
-				<div class="mx-auto w-full max-w-6xl">
-					<div class="max-w-4xl">
-						<h1 class="font-athiti text-[40px] font-semibold leading-[1.12] tracking-normal text-neutral-900 sm:text-[52px]">
-							Work
-						</h1>
-						<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
-							A look back at recent events.
-						</p>
-					</div>
+		<!-- PAGE INTRO + EVENT LIST -->
+		<PageIntro ariaLabel="Work" title="Work">
+			<p class="font-poppins mt-4 text-pretty text-[16px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-600 sm:text-[18px]">
+				A look back at recent events.
+			</p>
 
-					<div class="mt-8 space-y-8">
-						{events.map((ev) => (
-							<EventSection
-								title={ev.title}
-								dateLabel={ev.dateLabel}
-								imageSrc={ev.imageSrc}
-								imageAlt={ev.imageAlt}
-								description={ev.description}
-								details={ev.details}
-							/>
-						))}
-					</div>
-				</div>
+			<!-- EventSection renders the full event (image + copy + details) -->
+			<div slot="after" class="mt-8 space-y-8">
+				{events.map((ev) => (
+					<EventSection
+						title={ev.title}
+						dateLabel={ev.dateLabel}
+						imageSrc={ev.imageSrc}
+						imageAlt={ev.imageAlt}
+						description={ev.description}
+						details={ev.details}
+					/>
+				))}
 			</div>
-		</section>
+		</PageIntro>
 	</main>
 </BaseLayout>

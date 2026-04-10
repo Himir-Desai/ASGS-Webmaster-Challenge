@@ -10,14 +10,19 @@ type Props = {
 };
 
 export default function OpenableInfoCard({ title, subtitle, imageSrc, imageAlt, summary, details }: Props) {
+  // Whether the modal dialog is currently open.
   const [open, setOpen] = useState(false);
+  // Unique ids used to connect aria-labelledby / aria-controls.
   const titleId = useId();
   const dialogId = useId();
+  // Focus management: return focus to trigger on close, focus close button on open.
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+  // Normalize the details string into paragraphs for display.
   const detailParagraphs = details.split("\n").filter(Boolean);
 
   const close = () => {
+    // Close the modal and restore focus back to the card trigger for accessibility.
     triggerRef.current?.focus();
     setOpen(false);
   };
@@ -38,6 +43,7 @@ export default function OpenableInfoCard({ title, subtitle, imageSrc, imageAlt, 
 
   useEffect(() => {
     if (!open) return;
+    // When opened, move focus into the dialog (close button is a safe first target).
     closeBtnRef.current?.focus();
   }, [open]);
 

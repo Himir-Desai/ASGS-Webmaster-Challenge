@@ -12,6 +12,7 @@ type Errors = Partial<Record<keyof Values, string>>;
 const EMAIL_TO = "desai.himir@gmail.com";
 
 function normalize(v: Values): Values {
+  // Keep mailto payload clean and validation consistent.
   return {
     name: v.name.trim(),
     email: v.email.trim(),
@@ -21,6 +22,7 @@ function normalize(v: Values): Values {
 }
 
 function validate(values: Values): Errors {
+  // Returns field-specific error messages; empty object means valid.
   const v = normalize(values);
   const errors: Errors = {};
 
@@ -40,46 +42,46 @@ function validate(values: Values): Errors {
   return errors;
 }
 
-function encodeMailto(value: string) {
-  return encodeURIComponent(value);
-}
-
 export default function ContactForm() {
+  // Controlled field values for the form inputs/textarea.
   const [values, setValues] = useState<Values>({ name: "", email: "", subject: "", message: "" });
+  // Tracks whether a field has been interacted with (used to decide when to show errors).
   const [touched, setTouched] = useState<Record<keyof Values, boolean>>({
     name: false,
     email: false,
     subject: false,
     message: false,
   });
-  const [submitError, setSubmitError] = useState<string | null>(null);
 
+  // Derived validation state for current values.
   const errors = validate(values);
   const isValid = Object.keys(errors).length === 0;
 
   function onBlur(field: keyof Values) {
+    // Mark a field as touched so its validation message can appear.
     setTouched((t) => ({ ...t, [field]: true }));
   }
 
   function onChange(field: keyof Values, next: string) {
+    // Update a single field (skip state update if unchanged).
     setValues((v) => (v[field] === next ? v : { ...v, [field]: next }));
   }
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    setSubmitError(null);
-
+    // On submit, reveal all validation errors at once.
     setTouched({ name: true, email: true, subject: true, message: true });
 
-    const nextErrors = validate(values);
+    const v = normalize(values);
+    const nextErrors = validate(v);
     if (Object.keys(nextErrors).length > 0) return;
 
-    const v = normalize(values);
-    const subject = v.subject;
+    // Compose the mailto: URL (opens user email client with a pre-filled draft).
     const body = `Name: ${v.name}\nEmail: ${v.email}\nSubject: ${v.subject}\n\nMessage:\n${v.message}\n`;
-    const href = `mailto:${EMAIL_TO}?subject=${encodeMailto(subject)}&body=${encodeMailto(body)}`;
+    const href = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(v.subject)}&body=${encodeURIComponent(body)}`;
 
     try {
+      // Prefer a clickable link so browser handles the mailto navigation reliably.
       const a = document.createElement("a");
       a.href = href;
       a.target = "_blank";
@@ -88,6 +90,7 @@ export default function ContactForm() {
       a.click();
       a.remove();
     } catch {
+      // Fallback for restrictive environments.
       window.location.href = href;
     }
   }
@@ -202,8 +205,6 @@ export default function ContactForm() {
           )}
         </div>
       </div>
-
-      {submitError && <p className="mt-4 text-sm text-red-600">{submitError}</p>}
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <button

@@ -12,34 +12,42 @@ const SLIDES: readonly Slide[] = [
 ] as const;
 
 export default function HeroCarousel() {
+  // Index of the currently visible slide (wraps around).
   const [active, setActive] = useState(0);
+  // Used for aria-controls / aria-describedby wiring (stable per mount).
   const controlsId = useId();
   const liveId = useId();
+  // Stops the auto-advance timer while the user is interacting (hover/focus).
   const [paused, setPaused] = useState(false);
+  // Micro-interaction: hint direction on hover/focus of prev/next controls.
   const [hoverHint, setHoverHint] = useState<"prev" | "next" | null>(null);
 
-  const SLIDES_LENGTH = SLIDES.length;
-  const safeActive = ((active % SLIDES_LENGTH) + SLIDES_LENGTH) % SLIDES_LENGTH;
+  const slidesLength = SLIDES.length;
+  // Normalized index so keyboard/auto-advance stays safe even if active drifts.
+  const safeActive = ((active % slidesLength) + slidesLength) % slidesLength;
   const activeSlide = SLIDES[safeActive];
 
-  const goPrev = () => setActive((v) => (v - 1 + SLIDES_LENGTH) % SLIDES_LENGTH);
-  const goNext = () => setActive((v) => (v + 1) % SLIDES_LENGTH);
+  // Navigation helpers (also used by keyboard handlers).
+  const goPrev = () => setActive((v) => (v - 1 + slidesLength) % slidesLength);
+  const goNext = () => setActive((v) => (v + 1) % slidesLength);
 
   useEffect(() => {
-    if (paused || SLIDES_LENGTH <= 1) return;
+    if (paused || slidesLength <= 1) return;
+    // Auto-advance while not paused.
     const id = window.setInterval(() => {
-      setActive((v) => (v + 1) % SLIDES_LENGTH);
+      setActive((v) => (v + 1) % slidesLength);
     }, 4500);
     return () => window.clearInterval(id);
-  }, [paused, SLIDES_LENGTH]);
+  }, [paused, slidesLength]);
 
+  // Shared dot navigation (rendered twice: desktop overlay + mobile below).
   const dots = (
     <div className="pointer-events-auto flex items-center gap-2">
-      {Array.from({ length: SLIDES_LENGTH }, (_, idx) => (
+      {Array.from({ length: slidesLength }, (_, idx) => (
         <button
           key={idx}
           type="button"
-          aria-label={`Go to slide ${idx + 1} of ${SLIDES_LENGTH}`}
+          aria-label={`Go to slide ${idx + 1} of ${slidesLength}`}
           aria-current={idx === safeActive ? "true" : undefined}
           onClick={() => setActive(idx)}
           className={[
@@ -59,11 +67,13 @@ export default function HeroCarousel() {
         aria-roledescription="carousel"
         aria-describedby={liveId}
         tabIndex={0}
+        // Interaction pauses auto-advance for usability.
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
         onKeyDown={(e) => {
+          // Keyboard support: Left/Right arrows to navigate.
           if (e.key === "ArrowLeft") {
             e.preventDefault();
             goPrev();
@@ -78,21 +88,21 @@ export default function HeroCarousel() {
             className="flex h-full w-full will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.2,0.9,0.2,1)] motion-reduce:transition-none"
             style={{ transform: `translateX(-${safeActive * 100}%)` }}
           >
-          {SLIDES.map((slide, idx) => (
-            <div key={slide.src} className="w-full shrink-0">
-              <img
-                src={slide.src}
-                alt={slide.alt}
-                className={[
-                  "block h-full w-full object-cover object-center transition-transform duration-200 ease-out motion-reduce:transition-none",
-                  idx === safeActive && hoverHint === "prev" ? "translate-x-2" : "",
-                  idx === safeActive && hoverHint === "next" ? "-translate-x-2" : "",
-                ].join(" ")}
-                fetchPriority={idx === safeActive ? "high" : "auto"}
-                decoding="async"
-              />
-            </div>
-          ))}
+            {SLIDES.map((slide, idx) => (
+              <div key={slide.src} className="w-full shrink-0">
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  className={[
+                    "block h-full w-full object-cover object-center transition-transform duration-200 ease-out motion-reduce:transition-none",
+                    idx === safeActive && hoverHint === "prev" ? "translate-x-2" : "",
+                    idx === safeActive && hoverHint === "next" ? "-translate-x-2" : "",
+                  ].join(" ")}
+                  fetchPriority={idx === safeActive ? "high" : "auto"}
+                  decoding="async"
+                />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -143,7 +153,7 @@ export default function HeroCarousel() {
         </div>
 
         <span id={liveId} className="sr-only" aria-live="polite">
-          {activeSlide ? `Slide ${safeActive + 1} of ${SLIDES_LENGTH}.` : ""}
+          {activeSlide ? `Slide ${safeActive + 1} of ${slidesLength}.` : ""}
         </span>
       </div>
 
