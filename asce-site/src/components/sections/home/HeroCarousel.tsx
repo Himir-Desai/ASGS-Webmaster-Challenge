@@ -116,6 +116,7 @@ export default function HeroCarousel() {
       <img
         src={`/ASGS-Webmaster-Challenge/icons/${direction}.svg`}
         aria-hidden="true"
+        alt={direction === "prev" ? "Previous slide" : "Next slide"}
         height={31}
         className={[
           "h-[31px] w-auto transition-transform duration-200 ease-out [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))] motion-reduce:transition-none",

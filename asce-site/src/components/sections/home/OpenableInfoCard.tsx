@@ -33,8 +33,8 @@ export default function OpenableInfoCard({ title, subtitle, imageSrc, imageAlt, 
     const root = document.documentElement;
     const prevOverflow = root.style.overflow;
     const prevPaddingRight = root.style.paddingRight;
-    root.style.overflow = "hidden";
     root.style.paddingRight = `${Math.max(0, window.innerWidth - root.clientWidth)}px`;
+    root.style.overflow = "hidden";
     return () => {
       root.style.overflow = prevOverflow;
       root.style.paddingRight = prevPaddingRight;
@@ -159,4 +159,3 @@ export default function OpenableInfoCard({ title, subtitle, imageSrc, imageAlt, 
     </>
   );
 }
-

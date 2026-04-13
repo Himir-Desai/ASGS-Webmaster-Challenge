@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCarousel from '../components/sections/home/HeroCarousel.tsx';
-import OpenableInfoCard from '../components/elements/OpenableInfoCard.tsx';
+import OpenableInfoCard from '../components/sections/home/OpenableInfoCard.tsx';
+import Accordion from '../components/sections/home/Accordion.tsx';
 
 // HOME PAGE COPY + DATA
 const bearGardensTitle =
@@ -136,27 +137,7 @@ const bearGardenDetails = [
 
 				<!-- Mobile: accordion -->
 				<div class="sm:hidden">
-					<div class="divide-y divide-neutral-200 rounded-xl border-2 border-neutral-200">
-						{
-							bearGardenDetails.map((d) => (
-								<details class="group px-4 py-4">
-									<summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-athiti text-[24px] font-semibold leading-[1.28] text-neutral-900">
-										<span>{d.title}</span>
-										<span aria-hidden="true" class="text-neutral-500 transition-transform group-open:rotate-180">
-											▾
-										</span>
-									</summary>
-									<div class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none group-open:grid-rows-[1fr]">
-										<div class="overflow-hidden">
-											<p class="font-poppins mt-3 translate-y-1 text-[18px] font-normal leading-[1.61] tracking-[-0.01em] text-neutral-700 opacity-0 transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none group-open:translate-y-0 group-open:opacity-100">
-												{d.body}
-											</p>
-										</div>
-									</div>
-								</details>
-							))
-						}
-					</div>
+					<Accordion client:idle items={bearGardenDetails} />
 				</div>
 			</div>
 		</section>
