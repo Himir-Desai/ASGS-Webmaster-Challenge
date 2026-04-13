@@ -1,54 +1,50 @@
 ---
 const instagramUrl = 'https://www.instagram.com/ucsdasce/';
-const linkedinUrl = 'https://www.linkedin.com/company/ucsd-associated-students-concerts-and-events';
+const linkedinUrl = 'https://www.linkedin.com/in/Himir-Desai';
+const resumeUrl = 'https://drive.google.com/file/d/1FmRCBECxFA9Rc8EwRgkj-WyZV4nzk-73/view?usp=sharing';
 ---
 
-<footer class="border-t border-neutral-200 bg-white">
+<footer class="border-t border-neutral-200 bg-[#00588C] sm:h-[135px]">
 	<div
-		class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-4 px-4 py-4 sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-center sm:gap-x-8 sm:gap-y-0 sm:px-6"
+		class="w-full h-full flex gap-4 sm:px-[50px] px-[25px] py-4 sm:justify-between sm:flex-row flex-col"
 	>
-		<div class="flex items-center sm:justify-self-start">
-			<p class="max-w-[14rem] text-left text-xs leading-relaxed text-neutral-500">
-				Made by Himir Desai for ASGS Webmaster Challenge
+		<div class="flex items-center sm:justify-self-start justify-center">
+			<p class="sm:text-left text-sm lg:text-base uppercase leading-relaxed text-white">
+				Made with ♡ by A.S. Graphic Studio
 			</p>
 		</div>
-
-		<span
-			class="hidden h-10 w-px justify-self-center bg-neutral-300 sm:block"
-			aria-hidden="true">
-		</span>
-
-		<div class="flex items-center justify-center sm:justify-self-center">
-			<p class="text-sm font-semibold tracking-tight text-neutral-900">ASCE</p>
-		</div>
-
-		<span
-			class="hidden h-10 w-px justify-self-center bg-neutral-300 sm:block"
-			aria-hidden="true">
-		</span>
 
 		<div class="flex items-center sm:justify-self-end">
 			<nav
 				aria-label="Social and contact"
-				class="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm sm:w-auto sm:justify-end"
+				class="flex w-full flex-wrap items-center uppercase justify-center gap-x-[10px] lg:gap-x-[44px] gap-y-2 text-sm lg:text-base sm:w-auto sm:justify-end"
 			>
 				<a
+					href="/ASGS-Webmaster-Challenge/contact"
+					class="relative inline-block text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-0 after:bg-current after:transition-[width] after:duration-300 after:ease-out hover:after:w-full"
+				>
+					Email
+				</a>
+
+				<a
+					href={resumeUrl}
+					class="relative inline-block text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-0 after:bg-current after:transition-[width] after:duration-300 after:ease-out hover:after:w-full"
+				>
+					Resume
+				</a>
+
+				<a
 					href={instagramUrl}
-					class="text-neutral-600 underline-offset-4 transition-colors hover:text-neutral-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+					class="relative inline-block text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-0 after:bg-current after:transition-[width] after:duration-300 after:ease-out hover:after:w-full"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
 					Instagram
 				</a>
-				<a
-					href="/contact"
-					class="text-neutral-600 underline-offset-4 transition-colors hover:text-neutral-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
-				>
-					Email
-				</a>
+
 				<a
 					href={linkedinUrl}
-					class="text-neutral-600 underline-offset-4 transition-colors hover:text-neutral-900 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+					class="relative inline-block text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 after:absolute after:left-0 after:-bottom-0.5 after:h-0.5 after:w-0 after:bg-current after:transition-[width] after:duration-300 after:ease-out hover:after:w-full"
 					target="_blank"
 					rel="noopener noreferrer"
 				>

@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactForm from '../components/sections/contact/ContactForm.tsx';
 import PageIntro from '../components/elements/PageIntro.astro';
+
+const instagramUrl = 'https://www.instagram.com/ucsdasce/';
+const linkedinUrl = 'https://www.linkedin.com/in/Himir-Desai';
 ---
 
 <BaseLayout title="Contact">
@@ -28,7 +31,7 @@ import PageIntro from '../components/elements/PageIntro.astro';
 						</p>
 						<nav aria-label="Social links" class="mt-5 flex flex-col gap-3 text-sm">
 							<a
-								href="https://www.instagram.com/ucsdasce/"
+								href={instagramUrl}
 								class="group card-interactive flex items-center justify-between gap-4 rounded-lg border-2 border-neutral-200 bg-white px-4 py-3 text-neutral-800 transition-[color,transform] hover:-translate-y-px hover:text-neutral-900 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none"
 								target="_blank"
 								rel="noopener noreferrer"
@@ -39,7 +42,7 @@ import PageIntro from '../components/elements/PageIntro.astro';
 								</span>
 							</a>
 							<a
-								href="https://www.linkedin.com/company/ucsd-associated-students-concerts-and-events"
+								href={linkedinUrl}
 								class="group card-interactive flex items-center justify-between gap-4 rounded-lg border-2 border-neutral-200 bg-white px-4 py-3 text-neutral-800 transition-[color,transform] hover:-translate-y-px hover:text-neutral-900 active:translate-y-0 active:scale-[0.99] focus-visible:outline-none"
 								target="_blank"
 								rel="noopener noreferrer"
