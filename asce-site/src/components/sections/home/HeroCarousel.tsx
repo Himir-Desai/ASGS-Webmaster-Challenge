@@ -12,36 +12,77 @@ const SLIDES: readonly Slide[] = [
 ] as const;
 
 export default function HeroCarousel() {
-  // Index of the currently visible slide (wraps around).
-  const [active, setActive] = useState(0);
+  // Index within `trackSlides` (includes clones).
+  // Start at 1 so the first visible slide is the real slide 0.
+  const [active, setActive] = useState(1);
+  const [animating, setAnimating] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   // Used for aria-controls / aria-describedby wiring (stable per mount).
   const controlsId = useId();
   const liveId = useId();
-  // Stops the auto-advance timer while the user is interacting (hover/focus).
-  const [paused, setPaused] = useState(false);
-  // Micro-interaction: hint direction on hover/focus of prev/next controls.
-  const [hoverHint, setHoverHint] = useState<"prev" | "next" | null>(null);
 
   const slidesLength = SLIDES.length;
-  // Normalized index so keyboard/auto-advance stays safe even if active drifts.
-  const safeActive = ((active % slidesLength) + slidesLength) % slidesLength;
+  const trackSlides =
+    slidesLength > 1 ? [SLIDES[slidesLength - 1], ...SLIDES, SLIDES[0]] : [...SLIDES];
+
+  // Visible index mapped back to the real slides (0..slidesLength-1).
+  const safeActive =
+    slidesLength <= 1 ? 0 : ((active - 1 + slidesLength) % slidesLength);
   const activeSlide = SLIDES[safeActive];
 
+  const canMove = slidesLength > 1 && !isTransitioning;
+  const clampActive = (v: number) => Math.max(0, Math.min(slidesLength + 1, v));
+
+  const moveTo = (next: number) => {
+    if (!canMove) return;
+    setIsTransitioning(true);
+    setActive(clampActive(next));
+  };
+
   // Navigation helpers (also used by keyboard handlers).
-  const goPrev = () => setActive((v) => (v - 1 + slidesLength) % slidesLength);
-  const goNext = () => setActive((v) => (v + 1) % slidesLength);
+  const goPrev = () => moveTo(active - 1);
+  const goNext = () => moveTo(active + 1);
 
   useEffect(() => {
-    if (paused || slidesLength <= 1) return;
-    // Auto-advance while not paused.
+    if (slidesLength <= 1) return;
     const id = window.setInterval(() => {
-      setActive((v) => (v + 1) % slidesLength);
+      setIsTransitioning((t) => {
+        if (t) return t;
+        setActive((v) => clampActive(v + 1));
+        return true;
+      });
     }, 4500);
     return () => window.clearInterval(id);
-  }, [paused, slidesLength]);
+  }, [slidesLength]);
 
-  // Shared dot navigation (rendered twice: desktop overlay + mobile below).
-  const dots = (
+  useEffect(() => {
+    if (animating) return;
+    // Re-enable transitions on the next frame after a snap.
+    const id = window.requestAnimationFrame(() => setAnimating(true));
+    return () => window.cancelAnimationFrame(id);
+  }, [animating]);
+
+  useEffect(() => {
+    // If transitions are disabled (motion-reduce) there may be no transitionend.
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    setIsTransitioning(false);
+  }, [active]);
+
+  const snapTo = (nextActive: number) => {
+    setAnimating(false);
+    setActive(nextActive);
+    setIsTransitioning(false);
+  };
+
+  const onTrackTransitionEnd = () => {
+    if (slidesLength <= 1) return;
+    if (active === 0) snapTo(slidesLength);
+    else if (active === slidesLength + 1) snapTo(1);
+    else setIsTransitioning(false);
+  };
+
+  const renderDots = () => (
     <div className="pointer-events-auto flex items-center gap-2">
       {Array.from({ length: slidesLength }, (_, idx) => (
         <button
@@ -49,7 +90,7 @@ export default function HeroCarousel() {
           type="button"
           aria-label={`Go to slide ${idx + 1} of ${slidesLength}`}
           aria-current={idx === safeActive ? "true" : undefined}
-          onClick={() => setActive(idx)}
+          onClick={() => moveTo(idx + 1)}
           className={[
             "h-[6px] w-[6px] cursor-pointer rounded-full bg-neutral-300 transition-[transform,background-color] duration-200 ease-out will-change-transform hover:scale-[1.6] hover:bg-neutral-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:h-2 sm:w-2",
             idx === safeActive ? "scale-[1.35] bg-neutral-900 hover:bg-neutral-900" : "",
@@ -57,6 +98,32 @@ export default function HeroCarousel() {
         />
       ))}
     </div>
+  );
+
+  const renderArrowButton = (direction: "prev" | "next") => (
+    <button
+      type="button"
+      aria-controls={controlsId}
+      aria-label={direction === "prev" ? "Previous slide" : "Next slide"}
+      onClick={direction === "prev" ? goPrev : goNext}
+      className={[
+        "group absolute top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:h-[62px] sm:w-[62px]",
+        direction === "prev"
+          ? "left-2 active:-translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] sm:left-4"
+          : "right-2 active:translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] sm:right-4",
+      ].join(" ")}
+    >
+      <img
+        src={`/ASGS-Webmaster-Challenge/icons/${direction}.svg`}
+        aria-hidden="true"
+        height={31}
+        className={[
+          "h-[31px] w-auto transition-transform duration-200 ease-out [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))] motion-reduce:transition-none",
+          direction === "prev" ? "group-active:-translate-x-0.5" : "group-active:translate-x-0.5",
+        ].join(" ")}
+        draggable={false}
+      />
+    </button>
   );
 
   return (
@@ -67,11 +134,6 @@ export default function HeroCarousel() {
         aria-roledescription="carousel"
         aria-describedby={liveId}
         tabIndex={0}
-        // Interaction pauses auto-advance for usability.
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={() => setPaused(false)}
         onKeyDown={(e) => {
           // Keyboard support: Left/Right arrows to navigate.
           if (e.key === "ArrowLeft") {
@@ -85,20 +147,21 @@ export default function HeroCarousel() {
       >
         <div className="aspect-[16/9] w-full bg-neutral-100">
           <div
-            className="flex h-full w-full will-change-transform transition-transform duration-500 ease-[cubic-bezier(0.2,0.9,0.2,1)] motion-reduce:transition-none"
-            style={{ transform: `translateX(-${safeActive * 100}%)` }}
+            className={[
+              "flex h-full w-full will-change-transform",
+              animating ? "transition-transform duration-500 ease-[cubic-bezier(0.2,0.9,0.2,1)]" : "transition-none",
+              "motion-reduce:transition-none",
+            ].join(" ")}
+            style={{ transform: `translateX(-${active * 100}%)` }}
+            onTransitionEnd={onTrackTransitionEnd}
           >
-            {SLIDES.map((slide, idx) => (
+            {trackSlides.map((slide) => (
               <div key={slide.src} className="w-full shrink-0">
                 <img
                   src={slide.src}
                   alt={slide.alt}
-                  className={[
-                    "block h-full w-full object-cover object-center transition-transform duration-200 ease-out motion-reduce:transition-none",
-                    idx === safeActive && hoverHint === "prev" ? "translate-x-2" : "",
-                    idx === safeActive && hoverHint === "next" ? "-translate-x-2" : "",
-                  ].join(" ")}
-                  fetchPriority={idx === safeActive ? "high" : "auto"}
+                  className="block h-full w-full object-cover object-center"
+                  fetchPriority={slide.src === activeSlide?.src ? "high" : "auto"}
                   decoding="async"
                 />
               </div>
@@ -106,50 +169,11 @@ export default function HeroCarousel() {
           </div>
         </div>
 
-        <button
-          type="button"
-          aria-controls={controlsId}
-          aria-label="Previous slide"
-          onClick={goPrev}
-          onMouseEnter={() => setHoverHint("prev")}
-          onMouseLeave={() => setHoverHint(null)}
-          onFocus={() => setHoverHint("prev")}
-          onBlur={() => setHoverHint(null)}
-          className="group absolute left-2 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] active:-translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:left-4 sm:h-[62px] sm:w-[62px]"
-        >
-          <img
-            src="/ASGS-Webmaster-Challenge/icons/prev.svg"
-            alt=""
-            aria-hidden="true"
-            height={31}
-            className="h-[31px] w-auto transition-transform duration-200 ease-out [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))] motion-reduce:transition-none group-active:-translate-x-0.5"
-            draggable={false}
-          />
-        </button>
-
-        <button
-          type="button"
-          aria-controls={controlsId}
-          aria-label="Next slide"
-          onClick={goNext}
-          onMouseEnter={() => setHoverHint("next")}
-          onMouseLeave={() => setHoverHint(null)}
-          onFocus={() => setHoverHint("next")}
-          onBlur={() => setHoverHint(null)}
-          className="group absolute right-2 top-1/2 flex h-[42px] w-[42px] -translate-y-1/2 cursor-pointer items-center justify-center rounded-full transition-[opacity,transform,box-shadow] duration-200 ease-out hover:opacity-100 hover:scale-[1.02] hover:shadow-[0_10px_25px_rgba(0,0,0,0.28)] active:translate-x-0.5 active:shadow-[0_6px_18px_rgba(0,0,0,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 motion-reduce:transition-none sm:right-4 sm:h-[62px] sm:w-[62px]"
-        >
-          <img
-            src="/ASGS-Webmaster-Challenge/icons/next.svg"
-            alt=""
-            aria-hidden="true"
-            height={31}
-            className="h-[31px] w-auto transition-transform duration-200 ease-out [filter:drop-shadow(0_1px_3px_rgba(0,0,0,0.55))] motion-reduce:transition-none group-active:translate-x-0.5"
-            draggable={false}
-          />
-        </button>
+        {renderArrowButton("prev")}
+        {renderArrowButton("next")}
 
         <div id={controlsId} className="pointer-events-none absolute bottom-4 left-1/2 z-10 hidden -translate-x-1/2 sm:block">
-          {dots}
+          {renderDots()}
         </div>
 
         <span id={liveId} className="sr-only" aria-live="polite">
@@ -157,7 +181,7 @@ export default function HeroCarousel() {
         </span>
       </div>
 
-      <div className="pointer-events-none mt-3 flex justify-center sm:hidden">{dots}</div>
+      <div className="pointer-events-none mt-3 flex justify-center sm:hidden">{renderDots()}</div>
     </section>
   );
 }
