@@ -16,7 +16,9 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed in your terminal (usually `http://localhost:4321`).
+Open the local URL printed in your terminal (usually `http://localhost:4321/ASGS-Webmaster-Challenge`).
+
+Also, note that `\ASGS-Webmaster-Challenge` extension to the URL is for GitHub pages setup.
 
 ## Other Commands
 

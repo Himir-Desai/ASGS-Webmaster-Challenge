@@ -156,8 +156,8 @@ export default function HeroCarousel() {
             style={{ transform: `translateX(-${active * 100}%)` }}
             onTransitionEnd={onTrackTransitionEnd}
           >
-            {trackSlides.map((slide) => (
-              <div key={slide.src} className="w-full shrink-0">
+            {trackSlides.map((slide, i) => (
+              <div key={i} className="w-full shrink-0">
                 <img
                   src={slide.src}
                   alt={slide.alt}
